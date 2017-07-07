@@ -19,6 +19,8 @@ namespace DemoOfCSharp7
 
         internal static void OutVariables(Action<string> log)
         {
+            log("OutVariables");
+
             // Local Function, også nytt i C#7, tror jeg...
             void TestParse(string text)
             {
@@ -38,6 +40,8 @@ namespace DemoOfCSharp7
 
         internal static void PatternMatching(Action<string> log)
         {
+            log("PatternMatching");
+
             List<Shape> list = new List<Shape>();
             list.Add(new Circle() { Radius = 20 });
             list.Add(new Circle() { Radius = 100 });
@@ -75,6 +79,8 @@ namespace DemoOfCSharp7
 
         internal static void Tuples(Action<string> log)
         {
+            log("Tuples");
+
             // Metode som returnerer en tupple på 3 elementer, uten navn
             (string, bool, int) DoSomething(int number)
             {
@@ -102,6 +108,8 @@ namespace DemoOfCSharp7
 
         internal static void Exceptions(Action<string> log)
         {
+            log("Exceptions");
+
             void OldDoUsefullStuff(string text)
             {
                 if (text == null)
@@ -130,6 +138,8 @@ namespace DemoOfCSharp7
 
         internal static void ExpressionBodies(Action<string> log)
         {
+            log("ExpressionBodies");
+
             // Se User klassen!
             var user = new User("Alfred");
             log("Username: " + user.UserName);
