@@ -8,19 +8,16 @@ namespace DemoOfCSharp7
 {
     public class Sharp7Stuff
     {
+        static Action<string> log = t => Console.WriteLine($"{t}");
 
-        internal static void DigitSeparators(Action<string> log)
+        internal static void DigitSeparators()
         {
-            log("DigitSeparators");
-
             var oneMillion = 1_000_000;
             log("1_000_000 = " + oneMillion);
         }
 
-        internal static void OutVariables(Action<string> log)
+        internal static void OutVariables()
         {
-            log("OutVariables");
-
             // Local Function, også nytt i C#7, tror jeg...
             void TestParse(string text)
             {
@@ -38,9 +35,8 @@ namespace DemoOfCSharp7
             TestParse("tull");
         }
 
-        internal static void PatternMatching(Action<string> log)
+        internal static void PatternMatching()
         {
-            log("PatternMatching");
             var list = new List<Shape>() {
                 new Circle() { Radius = 20 },
                 new Circle() { Radius = 100 },
@@ -85,10 +81,8 @@ namespace DemoOfCSharp7
             }
         }
 
-        internal static void Tuples(Action<string> log)
+        internal static void Tuples()
         {
-            log("Tuples");
-
             // Metode som returnerer en tupple på 3 elementer, uten navn
             (string, bool, int) DoSomething(int number)
             {
@@ -114,47 +108,34 @@ namespace DemoOfCSharp7
 
         }
 
-        internal static void Exceptions(Action<string> log)
+        internal static void Exceptions()
         {
-            log("Exceptions");
-
-            void Try<T>(string nameOfAction, Action<T> action, T value)
+            void Try(Action<string> action, string value)
             {
-                try
-                {
-                    action(value);
-                }
-                catch(Exception ex)
-                {
-                    log($"Exception when performing action {nameOfAction}. Message: {ex.Message}");
-                }
+                try { action(value); }
+                catch(Exception ex) { log($"Exception when performing action {action.Method.Name}. Message: {ex.Message}"); }
             }
 
-            Action<string> OldWay = text =>
+            void OldWay(string text)
             {
                 if (text == null)
                 {
                     throw new ArgumentNullException(nameof(text));
                 }
                 log(text);
-            };
+            }
 
-            Action<string> NewWay = text =>
-                log(text ?? throw new ArgumentNullException(nameof(text)));
+            void NewWay(string text) => log(text ?? throw new ArgumentNullException(nameof(text)));
 
-            Try("OldWay", OldWay, null);
-            Try("NewWay", NewWay, null);
+            Try(OldWay, null);
+            Try(NewWay, null);
         }
 
-        internal static void ExpressionBodies(Action<string> log)
+        internal static void ExpressionBodies()
         {
-            log("ExpressionBodies");
-
             // Se User klassen!
             var user = new User("Alfred");
             log("Username: " + user.UserName);
-
-
         }
 
         public class User

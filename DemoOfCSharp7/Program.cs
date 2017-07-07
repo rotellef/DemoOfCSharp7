@@ -16,27 +16,20 @@ namespace DemoOfCSharp7
             // Comment a line:   Ctrl-K, Ctrl-C
             // UnComment a line: Ctrl-K, Ctrl-U
 
-            Action<string> log = s => Console.WriteLine(s);
-
-            DigitSeparators(log);
-            Console.ReadLine();
-
-            OutVariables(log);
-            Console.ReadLine();
-
-            ExpressionBodies(log);
-            Console.ReadLine();
-
-            Exceptions(log);
-            Console.ReadLine();
-
+            Do(DigitSeparators);
+            Do(OutVariables);
+            Do(ExpressionBodies);
+            Do(Exceptions);
             // Need System.ValueTuple from NuGet installed in solution
-            Tuples(log);
-            Console.ReadLine();
+            Do(Tuples);
+            Do(PatternMatching);
 
-            Sharp7Stuff.PatternMatching(log);
+        }
+        private static void Do(Action action)
+        {
+            Console.WriteLine(action.Method.Name);
+            action();
             Console.ReadLine();
-
         }
     }
 }
