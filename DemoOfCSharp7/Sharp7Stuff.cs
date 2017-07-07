@@ -42,13 +42,14 @@ namespace DemoOfCSharp7
         {
             log("PatternMatching");
 
-            List<Shape> list = new List<Shape>();
-            list.Add(new Circle() { Radius = 20 });
-            list.Add(new Circle() { Radius = 100 });
-            list.Add(new Circle() { Radius = -2 });
-            list.Add(new Rectangle() { Height = 5, Width = 20 });
-            list.Add(new Rectangle() { Height = 10, Width = 100 });
-            list.Add(null);
+            var list = new List<Shape>() {
+                new Circle() { Radius = 20 },
+                new Circle() { Radius = 100 },
+                new Circle() { Radius = -2 },
+                new Rectangle() { Height = 5, Width = 20 },
+                new Rectangle() { Height = 10, Width = 100 },
+                null
+            };
 
             foreach (var shape in list)
             {
@@ -59,17 +60,16 @@ namespace DemoOfCSharp7
                     case Rectangle r:
                         log($"It was a Rectangle with height={r.Height} and width={r.Width}");
                         break;
-
                     case Circle c when (c.Radius < 0):
                         log($"Damn, we have a circle with negative radius! Radius = {c.Radius}");
                         break;
                     case Circle c when (c.Radius > 80):
                         log("Ohhhh, big circle!!");
                         break;
-                    case Circle c:
+                    // Hvis vi ikke bryr oss om verdier i objected, kan vi indikere den slik:
+                    case Circle _:
                         log("normal circle... zzz zzz zzz");
                         break;
-
                     case null:
                         log("I don't like null! Ignoring that!");
                         break;
