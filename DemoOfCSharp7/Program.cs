@@ -23,6 +23,19 @@ namespace DemoOfCSharp7
             // Need System.ValueTuple from NuGet installed in solution
             Do(Tuples);
             Do(PatternMatching);
+
+            // Record Type blir superhot, men har ikke kommet ennå:
+            // https://github.com/dotnet/csharplang/blob/master/proposals/records.md
+            //
+            // Nesten samme som case class i scala!
+            //
+            // Declarer en klasse på en linje:
+            // class Point(int X, int Y, int Z)
+            //
+            // Du får automagisk impementert IEquatable og en ToString-metode som bruker verdiene i feltene, 
+            // og ikke en kryptisk hash av objektet
+            //
+            // Flytta til C#8 :(
         }
 
         private static void Do(Action action)
