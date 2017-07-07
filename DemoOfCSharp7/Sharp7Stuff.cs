@@ -46,8 +46,8 @@ namespace DemoOfCSharp7
             list.Add(new Circle() { Radius = 20 });
             list.Add(new Circle() { Radius = 100 });
             list.Add(new Circle() { Radius = -2 });
-            list.Add(new Rectangle() { Height = 5, Width = 20});
-            list.Add(new Rectangle() { Height = 10, Width = 100});
+            list.Add(new Rectangle() { Height = 5, Width = 20 });
+            list.Add(new Rectangle() { Height = 10, Width = 100 });
             list.Add(null);
 
             foreach (var shape in list)
@@ -60,10 +60,10 @@ namespace DemoOfCSharp7
                         log($"It was a Rectangle with height={r.Height} and width={r.Width}");
                         break;
 
-                    case Circle c when (c.Radius<0):
+                    case Circle c when (c.Radius < 0):
                         log($"Damn, we have a circle with negative radius! Radius = {c.Radius}");
                         break;
-                    case Circle c when (c.Radius>80):
+                    case Circle c when (c.Radius > 80):
                         log("Ohhhh, big circle!!");
                         break;
                     case Circle c:
@@ -93,13 +93,13 @@ namespace DemoOfCSharp7
             // Funksjon for å logge ut resultat dersom den er "valid". Navngitte tupple-elementer
             Action<(string msg, bool valid, int value)> logTupple = tu =>
             {
-                if(tu.valid)
+                if (tu.valid)
                     log(tu.value + " is valid: " + tu.msg);
             };
 
             var result1 = DoSomething(-2);
             logTupple(result1);
-                
+
             var result2 = DoSomething(20);
             logTupple(result2);
 
@@ -121,19 +121,21 @@ namespace DemoOfCSharp7
 
             void NewDoUsefullStuff(string text)
             {
-                log(text?? throw new ArgumentNullException(nameof(text)));
+                log(text ?? throw new ArgumentNullException(nameof(text)));
             }
 
 
             try
             {
                 OldDoUsefullStuff(null);
-            } catch { }
+            }
+            catch { }
 
             try
             {
                 NewDoUsefullStuff(null);
-            }  catch { }
+            }
+            catch { }
         }
 
         internal static void ExpressionBodies(Action<string> log)
@@ -144,7 +146,7 @@ namespace DemoOfCSharp7
             var user = new User("Alfred");
             log("Username: " + user.UserName);
 
-            
+
         }
 
         public class User
