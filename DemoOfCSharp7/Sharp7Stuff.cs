@@ -8,7 +8,6 @@ namespace DemoOfCSharp7
 {
     public class Sharp7Stuff
     {
-      
 
         internal static void DigitSeparators(Action<string> log)
         {
