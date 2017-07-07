@@ -39,7 +39,39 @@ namespace DemoOfCSharp7
 
         internal static void PatternMatching(Action<string> log)
         {
-            throw new NotImplementedException();
+            List<Shape> list = new List<Shape>();
+            list.Add(new Circle() { Radius = 20 });
+            list.Add(new Circle() { Radius = 100 });
+            list.Add(new Circle() { Radius = -2 });
+            list.Add(new Rectangle() { Height = 5, Width = 20});
+            list.Add(new Rectangle() { Height = 10, Width = 100});
+            list.Add(null);
+
+            foreach (var shape in list)
+            {
+                // Isteden for å ha if-settninger som sjekker type, 
+                // for å å caste over til typen for å nå feltene, kan vi gjøre dette:
+                switch (shape)
+                {
+                    case Rectangle r:
+                        log($"It was a Rectangle with height={r.Height} and width={r.Width}");
+                        break;
+
+                    case Circle c when (c.Radius<0):
+                        log($"Damn, we have a circle with negative radius! Radius = {c.Radius}");
+                        break;
+                    case Circle c when (c.Radius>80):
+                        log("Ohhhh, big circle!!");
+                        break;
+                    case Circle c:
+                        log("normal circle... zzz zzz zzz");
+                        break;
+
+                    case null:
+                        log("I don't like null! Ignoring that!");
+                        break;
+                }
+            }
         }
 
         internal static void Tuples(Action<string> log)
@@ -129,7 +161,7 @@ namespace DemoOfCSharp7
             public int Radius { get; set; }
         }
 
-        public class Rectangle
+        public class Rectangle : Shape
         {
             public int Height { get; set; }
             public int Width { get; set; }

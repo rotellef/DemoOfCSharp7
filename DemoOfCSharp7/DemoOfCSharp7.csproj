@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shart7Stuff.cs" />
+    <Compile Include="Sharp7Stuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
