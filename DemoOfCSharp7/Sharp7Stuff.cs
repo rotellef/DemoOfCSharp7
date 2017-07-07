@@ -8,27 +8,23 @@ namespace DemoOfCSharp7
 {
     public class Sharp7Stuff
     {
-        static Action<string> log = t => Console.WriteLine($"{t}");
+        static void Log(string t) => Console.WriteLine($"{t}");
 
-        internal static void DigitSeparators()
-        {
-            var oneMillion = 1_000_000;
-            log("1_000_000 = " + oneMillion);
-        }
+        internal static void DigitSeparators() => Log("1_000_000 = " + 1_000_000);
 
         internal static void OutVariables()
         {
             // Local Function, også nytt i C#7, tror jeg...
             void TestParse(string text)
             {
-                log("Text to parse: " + text);
+                Log("Text to parse: " + text);
                 if (int.TryParse(text, out int number))// "var" funker også
-                    log("vi klarte å parse tallet!");
+                    Log("vi klarte å parse tallet!");
                 else
-                    log("klarte ikke parse tallet");
+                    Log("klarte ikke parse tallet");
 
                 // Tilgjengelig i hele scope:
-                log($"{number} + {number} = {number * 2}");
+                Log($"{number} + {number} = {number * 2}");
             }
 
             TestParse("9");
@@ -49,33 +45,41 @@ namespace DemoOfCSharp7
 
             foreach (var shape in list)
             {
-                if (shape is null) log("If - shape er null!");
-                if (shape is Circle ci) log($"If - shape a Circle: {ci}");
+                // Måten vi sjekka type på før:
+                if(shape != null && shape.GetType() == typeof(Circle))
+                {
+                    var circle = (Circle)shape;
+                    Log("Old way of type check and casting. This is Circle: " + circle.ToString());
+                }
+
+                if (shape is null) Log("If - shape is null!");
+                // Legg merke til at neste linje ikke slår til dersom shape == null
+                if (shape is Circle ci) Log($"If - shape is a Circle: {ci}");
                 // Men nå henger en unassigned variabel med navn "ci" i for-scopet vårt
                 // Se på dette griseriet:
-                ci = new Circle() { Radius = 9999};
+                ci = new Circle() { Radius = 9999 };
 
                 // Dette er rydding og fint:
                 switch (shape)
                 {
                     case Rectangle r:
-                        log($"It was a Rectangle with height={r.Height} and width={r.Width}");
+                        Log($"It was a Rectangle with height={r.Height} and width={r.Width}");
                         break;
                     case Circle c when (c.Radius < 0):
-                        log($"Damn, we have a circle with negative radius! Radius = {c.Radius}");
+                        Log($"Damn, we have a circle with negative radius! Radius = {c.Radius}");
                         break;
                     case Circle c when (c.Radius > 80):
-                        log("Ohhhh, big circle!!");
+                        Log("Ohhhh, big circle!!");
                         break;
                     // Hvis vi ikke bryr oss om verdier i objected, kan vi indikere den slik:
                     case Circle _:
-                        log("normal circle... zzz zzz zzz");
+                        Log("normal circle... zzz zzz zzz");
                         break;
                     case Triangle t:
-                        log($"A weird triangle {t.Name}");
+                        Log($"A weird triangle {t.Name}");
                         break;
                     case null:
-                        log("I don't like null! Ignoring that!");
+                        Log("I don't like null! Ignoring that!");
                         break;
                 }
             }
@@ -92,18 +96,18 @@ namespace DemoOfCSharp7
                     return ("Number was posetive! :)", true, number);
             }
 
-            // Funksjon for å logge ut resultat dersom den er "valid". Navngitte tupple-elementer
-            Action<(string msg, bool valid, int value)> logTupple = tu =>
+            // Funksjon for å Logge ut resultat dersom den er "valid". Navngitte tupple-elementer
+            Action<(string msg, bool valid, int value)> LogTupple = tu =>
             {
                 if (tu.valid)
-                    log(tu.value + " is valid: " + tu.msg);
+                    Log(tu.value + " is valid: " + tu.msg);
             };
 
             var result1 = DoSomething(-2);
-            logTupple(result1);
+            LogTupple(result1);
 
             var result2 = DoSomething(20);
-            logTupple(result2);
+            LogTupple(result2);
 
 
         }
@@ -113,19 +117,16 @@ namespace DemoOfCSharp7
             void Try(Action<string> action, string value)
             {
                 try { action(value); }
-                catch(Exception ex) { log($"Exception when performing action {action.Method.Name}. Message: {ex.Message}"); }
+                catch (Exception ex) { Log($"Exception when performing action {action.Method.Name}. Message: {ex.Message}"); }
             }
 
             void OldWay(string text)
             {
-                if (text == null)
-                {
-                    throw new ArgumentNullException(nameof(text));
-                }
-                log(text);
+                if (text == null) throw new ArgumentNullException(nameof(text));
+                Log(text);
             }
 
-            void NewWay(string text) => log(text ?? throw new ArgumentNullException(nameof(text)));
+            void NewWay(string text) => Log(text ?? throw new ArgumentNullException(nameof(text)));
 
             Try(OldWay, null);
             Try(NewWay, null);
@@ -135,9 +136,10 @@ namespace DemoOfCSharp7
         {
             // Se User klassen!
             var user = new User("Alfred");
-            log("Username: " + user.UserName);
+            Log("Username: " + user.UserName);
         }
 
+        #region Hjelpeklasser
         public class User
         {
             private string userName;
@@ -161,7 +163,7 @@ namespace DemoOfCSharp7
             public int Radius { get; set; }
 
             public override string ToString() => $"Radius={Radius}";
-            
+
         }
 
         public class Rectangle : Shape
@@ -173,8 +175,9 @@ namespace DemoOfCSharp7
 
         public class Triangle : Shape
         {
-            public string Name{ get; private set; }
+            public string Name { get; private set; }
             public Triangle(string name) => Name = name;
         }
     }
 }
+#endregion

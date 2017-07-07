@@ -23,13 +23,18 @@ namespace DemoOfCSharp7
             // Need System.ValueTuple from NuGet installed in solution
             Do(Tuples);
             Do(PatternMatching);
-
         }
+
         private static void Do(Action action)
         {
-            Console.WriteLine(action.Method.Name);
+            WriteHeader(action.Method.Name + ":");
             action();
             Console.ReadLine();
+        }
+        private static void WriteHeader(string t)
+        {
+            Console.WriteLine(t);
+            Console.WriteLine(new String('-', t.Length));
         }
     }
 }
