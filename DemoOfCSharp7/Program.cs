@@ -11,6 +11,9 @@ namespace DemoOfCSharp7
     {
         static void Main(string[] args)
         {
+            // Comment a line:   Ctrl-K, Ctrl-C
+            // UnComment a line: Ctrl-K, Ctrl-U
+
             Action<string> log = s => Console.WriteLine(s);
 
             DigitSeparators(log);
@@ -27,6 +30,9 @@ namespace DemoOfCSharp7
 
             // Need System.ValueTuple from NuGet installed in solution
             Tuples(log);
+            Console.ReadLine();
+
+            Sharp7Stuff.PatternMatching(log);
             Console.ReadLine();
 
         }

@@ -20,6 +20,7 @@ namespace DemoOfCSharp7
 
         internal static void OutVariables(Action<string> log)
         {
+            // Local Function, også nytt i C#7, tror jeg...
             void TestParse(string text)
             {
                 log("Text to parse: " + text);
@@ -34,6 +35,11 @@ namespace DemoOfCSharp7
 
             TestParse("9");
             TestParse("tull");
+        }
+
+        internal static void PatternMatching(Action<string> log)
+        {
+            throw new NotImplementedException();
         }
 
         internal static void Tuples(Action<string> log)
@@ -93,6 +99,7 @@ namespace DemoOfCSharp7
 
         internal static void ExpressionBodies(Action<string> log)
         {
+            // Se User klassen!
             var user = new User("Alfred");
             log("Username: " + user.UserName);
 
@@ -105,12 +112,27 @@ namespace DemoOfCSharp7
 
             public string UserName
             {
+                // Kortere måte å skrive metoder med en linje på:
                 get => userName;
                 private set => userName = value;
             }
 
-            //Constructor
+            // Kortere måte å skrive constructor med en linje på:
             public User(string userName) => UserName = userName;
+        }
+
+
+        public abstract class Shape { }
+
+        public class Circle : Shape
+        {
+            public int Radius { get; set; }
+        }
+
+        public class Rectangle
+        {
+            public int Height { get; set; }
+            public int Width { get; set; }
         }
     }
 }
