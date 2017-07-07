@@ -25,7 +25,7 @@ namespace DemoOfCSharp7
             void TestParse(string text)
             {
                 log("Text to parse: " + text);
-                if (int.TryParse(text, out int number))// var funker også
+                if (int.TryParse(text, out int number))// "var" funker også
                     log("vi klarte å parse tallet!");
                 else
                     log("klarte ikke parse tallet");
@@ -41,20 +41,25 @@ namespace DemoOfCSharp7
         internal static void PatternMatching(Action<string> log)
         {
             log("PatternMatching");
-
             var list = new List<Shape>() {
                 new Circle() { Radius = 20 },
                 new Circle() { Radius = 100 },
                 new Circle() { Radius = -2 },
                 new Rectangle() { Height = 5, Width = 20 },
                 new Rectangle() { Height = 10, Width = 100 },
+                new Triangle("Triangle"),
                 null
             };
 
             foreach (var shape in list)
             {
-                // Isteden for å ha if-settninger som sjekker type, 
-                // for å å caste over til typen for å nå feltene, kan vi gjøre dette:
+                if (shape is null) log("If - shape er null!");
+                if (shape is Circle ci) log($"If - shape a Circle: {ci}");
+                // Men nå henger en unassigned variabel med navn "ci" i for-scopet vårt
+                // Se på dette griseriet:
+                ci = new Circle() { Radius = 9999};
+
+                // Dette er rydding og fint:
                 switch (shape)
                 {
                     case Rectangle r:
@@ -69,6 +74,9 @@ namespace DemoOfCSharp7
                     // Hvis vi ikke bryr oss om verdier i objected, kan vi indikere den slik:
                     case Circle _:
                         log("normal circle... zzz zzz zzz");
+                        break;
+                    case Triangle t:
+                        log($"A weird triangle {t.Name}");
                         break;
                     case null:
                         log("I don't like null! Ignoring that!");
@@ -170,12 +178,22 @@ namespace DemoOfCSharp7
         public class Circle : Shape
         {
             public int Radius { get; set; }
+
+            public override string ToString() => $"Radius={Radius}";
+            
         }
 
         public class Rectangle : Shape
         {
             public int Height { get; set; }
             public int Width { get; set; }
+            public override string ToString() => $"Height={Height}, Width={Width}";
+        }
+
+        public class Triangle : Shape
+        {
+            public string Name{ get; private set; }
+            public Triangle(string name) => Name = name;
         }
     }
 }
