@@ -36,6 +36,33 @@ namespace DemoOfCSharp7
             TestParse("tull");
         }
 
+        internal static void Tuples(Action<string> log)
+        {
+            // Metode som returnerer en tupple på 3 elementer, uten navn
+            (string, bool, int) DoSomething(int number)
+            {
+                if (number < 0)
+                    return ("Number was negative", false, number);
+                else
+                    return ("Number was posetive! :)", true, number);
+            }
+
+            // Funksjon for å logge ut resultat dersom den er "valid". Navngitte tupple-elementer
+            Action<(string msg, bool valid, int value)> logTupple = tu =>
+            {
+                if(tu.valid)
+                    log(tu.value + " is valid: " + tu.msg);
+            };
+
+            var result1 = DoSomething(-2);
+            logTupple(result1);
+                
+            var result2 = DoSomething(20);
+            logTupple(result2);
+
+
+        }
+
         internal static void Exceptions(Action<string> log)
         {
             void OldDoUsefullStuff(string text)

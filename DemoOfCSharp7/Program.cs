@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DemoOfCSharp7.Sharp7Stuff;
 
 namespace DemoOfCSharp7
 {
@@ -12,16 +13,20 @@ namespace DemoOfCSharp7
         {
             Action<string> log = s => Console.WriteLine(s);
 
-            Sharp7Stuff.DigitSeparators(log);
+            DigitSeparators(log);
             Console.ReadLine();
 
-            Sharp7Stuff.OutVariables(log);
+            OutVariables(log);
             Console.ReadLine();
 
-            Sharp7Stuff.ExpressionBodies(log);
+            ExpressionBodies(log);
             Console.ReadLine();
 
-            Sharp7Stuff.Exceptions(log);
+            Exceptions(log);
+            Console.ReadLine();
+
+            // Need System.ValueTuple from NuGet installed in solution
+            Tuples(log);
             Console.ReadLine();
 
         }
