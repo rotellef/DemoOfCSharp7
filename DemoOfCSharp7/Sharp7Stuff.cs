@@ -110,32 +110,32 @@ namespace DemoOfCSharp7
         {
             log("Exceptions");
 
-            void OldDoUsefullStuff(string text)
+            void Try<T>(string nameOfAction, Action<T> action, T value)
+            {
+                try
+                {
+                    action(value);
+                }
+                catch(Exception ex)
+                {
+                    log($"Exception when performing action {nameOfAction}. Message: {ex.Message}");
+                }
+            }
+
+            Action<string> OldWay = text =>
             {
                 if (text == null)
                 {
                     throw new ArgumentNullException(nameof(text));
                 }
                 log(text);
-            }
+            };
 
-            void NewDoUsefullStuff(string text)
-            {
+            Action<string> NewWay = text =>
                 log(text ?? throw new ArgumentNullException(nameof(text)));
-            }
 
-
-            try
-            {
-                OldDoUsefullStuff(null);
-            }
-            catch { }
-
-            try
-            {
-                NewDoUsefullStuff(null);
-            }
-            catch { }
+            Try("OldWay", OldWay, null);
+            Try("NewWay", NewWay, null);
         }
 
         internal static void ExpressionBodies(Action<string> log)
